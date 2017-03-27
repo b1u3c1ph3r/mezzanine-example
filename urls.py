@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 
@@ -12,13 +12,22 @@ admin.autodiscover()
 # Add the urlpatterns for any custom Django applications here.
 # You can also change the ``home`` view to add your own functionality
 # to the project's homepage.
-
+'''
 urlpatterns = i18n_patterns("",
     # Change the admin prefix here to use an alternate URL for the
     # admin interface, which would be marginally more secure.
     ("^admin/", include(admin.site.urls)),
-)
+)'''
+urlpatterns = [
+    # Examples:
+    # url(r'^$', 'blog.views.home', name='home'),
+    # url(r'^blog/', include('blog.urls')),
 
+    url(r'^admin/', include(admin.site.urls)),
+    url("^$", direct_to_template, {"template": "index.html"}, name="home"),
+    ("^", include("mezzanine.urls")),
+]
+'''
 urlpatterns += patterns('',
 
     # We don't want to presume how your homepage works, so here are a
@@ -88,7 +97,7 @@ urlpatterns += patterns('',
     # ("^%s/" % settings.SITE_PREFIX, include("mezzanine.urls"))
 
 )
-
+'''
 # Adds ``STATIC_URL`` to the context of error pages, so that error
 # pages can use JS, CSS and images.
 handler404 = "mezzanine.core.views.page_not_found"
